@@ -11,8 +11,7 @@ Welcome to **DashGenie**, a modern React Admin Dashboard built for seamless data
 
 ## 🚀 Live Demo
 
-👾 See it in action soon:  
-🔗 [DashGenie](#) <!-- Add your live link here if deployed -->
+See it in action: [DashGenie](https://krishnash648.github.io/DashGenie)
 
 ---
 
