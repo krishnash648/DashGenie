@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/DashGenie/static/css/main.e927aa31.css",
-    "main.js": "/DashGenie/static/js/main.2f338549.js",
+    "main.js": "/DashGenie/static/js/main.a7eda8eb.js",
     "static/js/453.c22e2980.chunk.js": "/DashGenie/static/js/453.c22e2980.chunk.js",
     "index.html": "/DashGenie/index.html",
     "main.e927aa31.css.map": "/DashGenie/static/css/main.e927aa31.css.map",
-    "main.2f338549.js.map": "/DashGenie/static/js/main.2f338549.js.map",
+    "main.a7eda8eb.js.map": "/DashGenie/static/js/main.a7eda8eb.js.map",
     "453.c22e2980.chunk.js.map": "/DashGenie/static/js/453.c22e2980.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e927aa31.css",
-    "static/js/main.2f338549.js"
+    "static/js/main.a7eda8eb.js"
   ]
 }
