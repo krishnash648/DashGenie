@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# DashGenie ⚡️
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![GitHub repo size](https://img.shields.io/github/repo-size/krishnash648/DashGenie)
+![GitHub contributors](https://img.shields.io/github/contributors/krishnash648/DashGenie)
+![GitHub stars](https://img.shields.io/github/stars/krishnash648/DashGenie?style=social)
+![GitHub issues](https://img.shields.io/github/issues/krishnash648/DashGenie)
 
-## Available Scripts
+Welcome to **DashGenie**, a modern React Admin Dashboard built for seamless data visualization, management, and productivity. Designed and developed by Krishna, this dashboard brings together customizable themes, interactive charts, tables, a Kanban board, and a calendar—all in a smooth, user-friendly interface.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Live Demo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+👾 See it in action soon:  
+🔗 [DashGenie](#) <!-- Add your live link here if deployed -->
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Features ✨
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 🌗 Light & Dark mode toggle for your preferred vibe
+- 📊 Interactive charts and analytics
+- 📅 Calendar integration for event management
+- 🗂️ Kanban board for task tracking
+- 📋 Responsive tables for data
+- 🧑‍💻 Clean, modern UI with smooth navigation
+- ⚡ Fast, responsive, and mobile-friendly
+- 🛠️ **No third-party tooltip or CSV export libraries:**
+  - Tooltips use native HTML `title` attributes for accessibility and performance
+  - CSV export is implemented with a custom JavaScript function (no extra dependencies)
+- 🆘 Help/About modal for user guidance
+- 🔍 Search and filter for tables and Kanban board
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Built With 🛠️
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [React](https://reactjs.org/) - The frontend framework
+- [React Router](https://reactrouter.com/) - For navigation
+- [Tailwind CSS](https://tailwindcss.com/) - For styling
+- [Recharts](https://recharts.org/) - For charts
+- [@mui/x-data-grid](https://mui.com/x/react-data-grid/) - For advanced tables
+- [@dnd-kit](https://dndkit.com/) - For Kanban drag-and-drop
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## Getting Started 💻
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Clone and run locally in a few steps:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+# Clone the repo
+git clone https://github.com/krishnash648/DashGenie.git
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Enter the project directory
+cd DashGenie
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Install dependencies
+npm install
 
-## Learn More
+# Start the development server
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Open your browser at [http://localhost:3000](http://localhost:3000) to see it live!
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Contact 📬
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Want to connect, collaborate, or just talk code?
 
-### Analyzing the Bundle Size
+- **Email:** [sharmakrishna1605@gmail.com](mailto:sharmakrishna1605@gmail.com)
+- **GitHub:** [krishnash648](https://github.com/krishnash648)
+- **Twitter:** [@_ipriyaaa_](https://x.com/_ipriyaaa_)
+- **Instagram:** [priyxhaa](https://www.instagram.com/priyxhaa/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> _Made with ❤️ by Krishna_
