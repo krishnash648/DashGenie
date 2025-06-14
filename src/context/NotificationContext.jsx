@@ -9,7 +9,6 @@ export const NotificationProvider = ({ children }) => {
     const newNotif = { id: Date.now(), message: msg };
     setNotifications((prev) => [...prev, newNotif]);
 
-    // Remove after 3s
     setTimeout(() => {
       setNotifications((prev) => prev.filter((n) => n.id !== newNotif.id));
     }, 3000);

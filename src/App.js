@@ -7,9 +7,13 @@ import Orders from "./pages/Orders";
 import Kanban from "./pages/Kanban";
 import Calendar from "./pages/Calendar";
 import Settings from "./pages/Settings";
+import Customers from "./pages/Customers";
+import Charts from "./pages/Charts";
 import Login from "./pages/Login";
 import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from 'react-hot-toast';
+import ChatbotWidget from './components/ChatbotWidget';
+import { NotificationProvider } from "./context/NotificationContext";
 
 const SETTINGS_KEY = 'dashboard_settings';
 const AUTH_KEY = 'dashgenie_loggedin';
@@ -38,15 +42,24 @@ function App() {
     if (username === DEMO_USER.username && password === DEMO_USER.password) {
       setLoggedIn(true);
       localStorage.setItem(AUTH_KEY, 'true');
+
       const newProfile = { username: 'Krishna Sharma', profilePic: 'https://randomuser.me/api/portraits/men/75.jpg' };
       localStorage.setItem(PROFILE_KEY, JSON.stringify(newProfile));
       setProfile(newProfile);
+
+      const existingNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
+      const loginNotification = { id: new Date().getTime(), text: 'Successfully logged in!' };
+      localStorage.setItem('notifications', JSON.stringify([loginNotification, ...existingNotifications]));
     } else {
       alert('Invalid username or password. Try admin/admin123');
     }
   };
 
   const handleLogout = () => {
+    const existingNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    const logoutNotification = { id: new Date().getTime(), text: 'You have logged out.' };
+    localStorage.setItem('notifications', JSON.stringify([logoutNotification, ...existingNotifications]));
+
     setLoggedIn(false);
     localStorage.removeItem(AUTH_KEY);
     localStorage.removeItem(PROFILE_KEY);
@@ -57,36 +70,42 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className={`flex h-screen w-full overflow-hidden ${settings.sidebarPosition === 'right' ? 'flex-row-reverse' : ''}`}>
-        <Toaster position="top-right" />
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} compact={settings.compactMode} position={settings.sidebarPosition} />
-        <div className="flex-1 flex flex-col">
-          <Navbar onLogout={handleLogout} profile={profile} />
-          <AnimatePresence mode="wait">
-            <motion.main
-              className="flex-1 pt-0 pb-4 md:pb-8 w-full h-full overflow-y-auto text-gray-100 p-6 transition-all duration-500"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              key={window.location.pathname}
-            >
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/orders" element={<Orders />} />
-                <Route path="/kanban" element={<Kanban />} />
-                <Route path="/calendar" element={<Calendar />} />
-                <Route path="/settings" element={<Settings />} />
-              </Routes>
-              <footer className="text-center py-4 text-gray-400 text-xs">
-                © {new Date().getFullYear()} DashGenie by Krishna. All rights reserved.
-              </footer>
-            </motion.main>
-          </AnimatePresence>
+    <NotificationProvider>
+      <Router>
+        <div className={`flex h-screen w-full overflow-hidden ${settings.sidebarPosition === 'right' ? 'flex-row-reverse' : ''}`}>
+          <Toaster position="top-right" />
+          <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} compact={settings.compactMode} position={settings.sidebarPosition} />
+          <div className="flex-1 flex flex-col">
+            <Navbar onLogout={handleLogout} profile={profile} />
+            <AnimatePresence mode="wait">
+              <motion.main
+                className="flex-1 pt-0 pb-4 md:pb-8 w-full h-full overflow-y-auto text-gray-100 p-6 transition-all duration-500"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                key={window.location.pathname}
+              >
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/orders" element={<Orders />} />
+                  <Route path="/kanban" element={<Kanban />} />
+                  <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/customers" element={<Customers />} />
+                  <Route path="/charts" element={<Charts />} />
+                </Routes>
+                <footer className="text-center py-4 text-gray-400 text-xs">
+                  © {new Date().getFullYear()} DashGenie by Krishna. All rights reserved.
+                </footer>
+              </motion.main>
+            </AnimatePresence>
+          </div>
         </div>
-      </div>
-    </Router>
+
+        <ChatbotWidget />
+      </Router>
+    </NotificationProvider>
   );
 }
 

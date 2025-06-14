@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { FaTachometerAlt, FaClipboardList, FaTasks, FaCalendarAlt, FaTimes, FaCog } from "react-icons/fa";
+import { FaTachometerAlt, FaClipboardList, FaTasks, FaCalendarAlt, FaTimes, FaCog, FaUsers, FaChartBar } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 
 const links = [
@@ -7,6 +7,8 @@ const links = [
   { to: "/orders", label: "Orders", icon: <FaClipboardList /> },
   { to: "/kanban", label: "Kanban", icon: <FaTasks /> },
   { to: "/calendar", label: "Calendar", icon: <FaCalendarAlt /> },
+  { to: "/charts", label: "Charts", icon: <FaChartBar /> },       
+  { to: "/customers", label: "Customers", icon: <FaUsers /> },    
   { to: "/settings", label: "Settings", icon: <FaCog /> },
 ];
 
@@ -39,6 +41,7 @@ const Sidebar = ({ isOpen, onClose, position = 'left', compact = false }) => {
           <div className={`py-1 px-2 font-bold ${compact ? 'text-base' : 'text-xl'} leading-tight text-center w-full mb-8`} style={{ color: 'var(--text-color)' }}>
             {compact ? 'DG' : 'DashGenie'}
           </div>
+
           <nav className="w-full flex flex-col space-y-2">
             {links.map((link) => (
               <Link

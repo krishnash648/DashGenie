@@ -65,14 +65,15 @@ export const ThemeProvider = ({ children }) => {
   }, [palette]);
 
   const toggleTheme = () => {
-    setDark((prev) => {
-      const next = !prev;
-      return next;
+  setDark(prev => {
+    const next = !prev;
+    toast(next ? 'Switched to Dark Mode' : 'Switched to Light Mode', {
+      icon: next ? '🌙' : '☀️',
     });
-    toast(!dark ? 'Switched to Dark Mode' : 'Switched to Light Mode', {
-      icon: !dark ? '🌙' : '☀️',
-    });
-  };
+    return next;
+  });
+};
+
 
   return (
     <ThemeContext.Provider value={{ dark, toggleTheme, palette, setPalette, palettes }}>
