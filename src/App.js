@@ -1,31 +1,31 @@
-/**
- * Celebal Dashboard
- * Developed by Krishna
- * © 2025 All rights reserved.
- */
 import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Orders from "./pages/Orders";
 import Kanban from "./pages/Kanban";
 import Calendar from "./pages/Calendar";
 import Settings from "./pages/Settings";
+import Login from "./pages/Login";
 import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from 'react-hot-toast';
 
 const SETTINGS_KEY = 'dashboard_settings';
+const AUTH_KEY = 'dashgenie_loggedin';
+const PROFILE_KEY = 'dashgenie_profile';
+const DEMO_USER = { username: 'admin', password: 'admin123' };
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [settings, setSettings] = useState(() => {
     const saved = localStorage.getItem(SETTINGS_KEY);
-    return saved ? JSON.parse(saved) : {
-      sidebarPosition: 'left',
-      compactMode: false,
-      fontSize: 'base',
-    };
+    return saved ? JSON.parse(saved) : { sidebarPosition: 'left', compactMode: false, fontSize: 'base' };
+  });
+  const [loggedIn, setLoggedIn] = useState(() => localStorage.getItem(AUTH_KEY) === 'true');
+  const [profile, setProfile] = useState(() => {
+    const saved = localStorage.getItem(PROFILE_KEY);
+    return saved ? JSON.parse(saved) : { username: 'Krishna', profilePic: 'https://randomuser.me/api/portraits/women/44.jpg' };
   });
 
   useEffect(() => {
@@ -34,16 +34,38 @@ function App() {
     return () => window.removeEventListener('settingsChanged', handler);
   }, []);
 
+  const handleLogin = (username, password) => {
+    if (username === DEMO_USER.username && password === DEMO_USER.password) {
+      setLoggedIn(true);
+      localStorage.setItem(AUTH_KEY, 'true');
+      const newProfile = { username: 'Krishna Sharma', profilePic: 'https://randomuser.me/api/portraits/men/75.jpg' };
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(newProfile));
+      setProfile(newProfile);
+    } else {
+      alert('Invalid username or password. Try admin/admin123');
+    }
+  };
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+    localStorage.removeItem(AUTH_KEY);
+    localStorage.removeItem(PROFILE_KEY);
+  };
+
+  if (!loggedIn) {
+    return <Login onLogin={handleLogin} />;
+  }
+
   return (
     <Router>
-      <div className={`flex h-screen w-full overflow-hidden bg-white dark:bg-gray-900 transition-colors duration-500 ${settings.sidebarPosition === 'right' ? 'flex-row-reverse' : ''}`}>
+      <div className={`flex h-screen w-full overflow-hidden ${settings.sidebarPosition === 'right' ? 'flex-row-reverse' : ''}`}>
         <Toaster position="top-right" />
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} compact={settings.compactMode} position={settings.sidebarPosition} />
-        <div className={`flex-1 flex flex-col ${settings.compactMode ? 'ml-20' : 'ml-40'} ${settings.sidebarPosition === 'right' ? (settings.compactMode ? 'mr-20 ml-0' : 'mr-40 ml-0') : ''}`}>
-          <Navbar onMenuClick={() => setSidebarOpen(true)} />
+        <div className="flex-1 flex flex-col">
+          <Navbar onLogout={handleLogout} profile={profile} />
           <AnimatePresence mode="wait">
             <motion.main
-              className="flex-1 pt-0 px-4 md:px-8 pb-4 md:pb-8 w-full h-full overflow-y-auto bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-all transition-colors duration-500"
+              className="flex-1 pt-0 pb-4 md:pb-8 w-full h-full overflow-y-auto text-gray-100 p-6 transition-all duration-500"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -57,9 +79,8 @@ function App() {
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
-              {/* Footer */}
               <footer className="text-center py-4 text-gray-400 text-xs">
-                © {new Date().getFullYear()} Celebal Dashboard by Krishna. All rights reserved.
+                © {new Date().getFullYear()} DashGenie by Krishna. All rights reserved.
               </footer>
             </motion.main>
           </AnimatePresence>

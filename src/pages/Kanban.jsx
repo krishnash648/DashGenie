@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DndContext,
   closestCenter,
@@ -32,6 +32,8 @@ const initialColumns = {
   },
 };
 
+const KANBAN_KEY = 'dashgenie_kanban';
+
 function KanbanCard({ id, content }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id });
@@ -55,16 +57,22 @@ function KanbanCard({ id, content }) {
 }
 
 const Kanban = () => {
-  const [columns, setColumns] = useState(initialColumns);
+  const [columns, setColumns] = useState(() => {
+    const saved = localStorage.getItem(KANBAN_KEY);
+    return saved ? JSON.parse(saved) : initialColumns;
+  });
   const [search, setSearch] = useState('');
 
   const sensors = useSensors(useSensor(PointerSensor));
+
+  useEffect(() => {
+    localStorage.setItem(KANBAN_KEY, JSON.stringify(columns));
+  }, [columns]);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (!over) return;
 
-    // Find the column and index for the active and over items
     let fromCol, toCol, fromIdx, toIdx;
     Object.entries(columns).forEach(([colId, col]) => {
       col.items.forEach((item, idx) => {
@@ -80,7 +88,6 @@ const Kanban = () => {
     });
 
     if (fromCol && toCol) {
-      // Move within the same column
       if (fromCol === toCol) {
         const newItems = arrayMove(columns[fromCol].items, fromIdx, toIdx);
         setColumns({
@@ -88,7 +95,7 @@ const Kanban = () => {
           [fromCol]: { ...columns[fromCol], items: newItems },
         });
       } else {
-        // Move to another column
+
         const fromItems = [...columns[fromCol].items];
         const toItems = [...columns[toCol].items];
         const [moved] = fromItems.splice(fromIdx, 1);
@@ -102,7 +109,6 @@ const Kanban = () => {
     }
   };
 
-  // Filter cards by search
   const getFilteredColumns = () => {
     if (!search) return columns;
     const filtered = {};

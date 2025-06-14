@@ -3,7 +3,6 @@ import {
   BarChart, Bar
 } from 'recharts';
 
-// Sample data
 const chartData = [
   { month: "Jan", sales: 35, orders: 20 },
   { month: "Feb", sales: 28, orders: 15 },
@@ -13,7 +12,6 @@ const chartData = [
 ];
 
 const Dashboard = () => {
-  // Calculate summary values
   const totalSales = chartData.reduce((sum, d) => sum + d.sales, 0);
   const totalOrders = chartData.reduce((sum, d) => sum + d.orders, 0);
   const avgSales = (totalSales / chartData.length).toFixed(1);

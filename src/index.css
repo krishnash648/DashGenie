@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary-color: #2563eb;
+  --accent-color: #10b981;
+  --background-color: #0f172a; /* Darker for neon pop */
+  --text-color: #f8fafc;
+  --neon-color: #00ffff;
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.sidebar {
+  background: var(--primary-color);
+  box-shadow: 0 0 20px var(--neon-color);
+}
+
+.button {
+  background: var(--accent-color);
+}
+
+/* 🔥 Notification Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out;
+}
