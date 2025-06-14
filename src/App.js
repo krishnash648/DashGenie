@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Orders from "./pages/Orders";
@@ -14,6 +14,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from 'react-hot-toast';
 import ChatbotWidget from './components/ChatbotWidget';
 import { NotificationProvider } from "./context/NotificationContext";
+import ProtectedRoute from "./components/ProtectedRoute"; // ✅ New
 
 const SETTINGS_KEY = 'dashboard_settings';
 const AUTH_KEY = 'dashgenie_loggedin';
@@ -65,43 +66,49 @@ function App() {
     localStorage.removeItem(PROFILE_KEY);
   };
 
-  if (!loggedIn) {
-    return <Login onLogin={handleLogin} />;
-  }
-
   return (
     <NotificationProvider>
       <Router>
-        <div className={`flex h-screen w-full overflow-hidden ${settings.sidebarPosition === 'right' ? 'flex-row-reverse' : ''}`}>
-          <Toaster position="top-right" />
-          <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} compact={settings.compactMode} position={settings.sidebarPosition} />
-          <div className="flex-1 flex flex-col">
-            <Navbar onLogout={handleLogout} profile={profile} />
-            <AnimatePresence mode="wait">
-              <motion.main
-                className="flex-1 pt-0 pb-4 md:pb-8 w-full h-full overflow-y-auto text-gray-100 p-6 transition-all duration-500"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-                key={window.location.pathname}
-              >
-                <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/orders" element={<Orders />} />
-                  <Route path="/kanban" element={<Kanban />} />
-                  <Route path="/calendar" element={<Calendar />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="/customers" element={<Customers />} />
-                  <Route path="/charts" element={<Charts />} />
-                </Routes>
-                <footer className="text-center py-4 text-gray-400 text-xs">
-                  © {new Date().getFullYear()} DashGenie by Krishna. All rights reserved.
-                </footer>
-              </motion.main>
-            </AnimatePresence>
+        {loggedIn && (
+          <div className={`flex h-screen w-full overflow-hidden ${settings.sidebarPosition === 'right' ? 'flex-row-reverse' : ''}`}>
+            <Toaster position="top-right" />
+            <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} compact={settings.compactMode} position={settings.sidebarPosition} />
+            <div className="flex-1 flex flex-col">
+              <Navbar onLogout={handleLogout} profile={profile} />
+              <AnimatePresence mode="wait">
+                <motion.main
+                  className="flex-1 pt-0 pb-4 md:pb-8 w-full h-full overflow-y-auto text-gray-100 p-6 transition-all duration-500"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4 }}
+                  key={window.location.pathname}
+                >
+                  <Routes>
+                    <Route path="/" element={<ProtectedRoute loggedIn={loggedIn}><Dashboard /></ProtectedRoute>} />
+                    <Route path="/orders" element={<ProtectedRoute loggedIn={loggedIn}><Orders /></ProtectedRoute>} />
+                    <Route path="/kanban" element={<ProtectedRoute loggedIn={loggedIn}><Kanban /></ProtectedRoute>} />
+                    <Route path="/calendar" element={<ProtectedRoute loggedIn={loggedIn}><Calendar /></ProtectedRoute>} />
+                    <Route path="/settings" element={<ProtectedRoute loggedIn={loggedIn}><Settings /></ProtectedRoute>} />
+                    <Route path="/customers" element={<ProtectedRoute loggedIn={loggedIn}><Customers /></ProtectedRoute>} />
+                    <Route path="/charts" element={<ProtectedRoute loggedIn={loggedIn}><Charts /></ProtectedRoute>} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                  </Routes>
+                  <footer className="text-center py-4 text-gray-400 text-xs">
+                    © {new Date().getFullYear()} DashGenie by Krishna. All rights reserved.
+                  </footer>
+                </motion.main>
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
+        )}
+
+        {!loggedIn && (
+          <Routes>
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="*" element={<Navigate to="/login" />} />
+          </Routes>
+        )}
 
         <ChatbotWidget />
       </Router>
