@@ -29,7 +29,6 @@ const Settings = () => {
     <div className="max-w-xl mx-auto bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 rounded-lg shadow p-8 mt-8 transition-colors duration-300">
       <h2 className="text-2xl font-bold mb-6">Settings</h2>
 
-      {/* Theme Selection */}
       <div className="mb-6">
         <label className="block font-semibold mb-2">Theme</label>
         <div className="flex flex-wrap gap-4">
@@ -71,7 +70,6 @@ const Settings = () => {
         </div>
       </div>
 
-      {/* Sidebar Position */}
       <div className="mb-6">
         <label className="block font-semibold mb-2">Sidebar Position</label>
         <select
@@ -84,7 +82,6 @@ const Settings = () => {
         </select>
       </div>
 
-      {/* Compact Mode */}
       <div className="mb-6">
         <label className="block font-semibold mb-2">Compact Mode</label>
         <div className="flex items-center">
@@ -98,7 +95,6 @@ const Settings = () => {
         </div>
       </div>
 
-      {/* Font Size */}
       <div className="mb-6">
         <label className="block font-semibold mb-2">Font Size</label>
         <select
